@@ -50,7 +50,8 @@ env = MineDojoEnv(
 
 class Evaluator:
     def __init__(self, cfg, env):
-        device = torch.device("cuda", 0)
+        device = "cuda" if torch.cuda.is_available() else \
+            ("mps" if torch.backends.mps.is_available() else "cpu")
         self.device = device
         self.cfg = cfg
         # super().__init__(cfg, device=device, only_base=True)
