@@ -269,7 +269,7 @@ def making_exp_name(cfg):
 
 # from ray.rllib.models.torch.mineclip_lib.mineclip_model import MineCLIP
 from src.mineclip_lib.mineclip_model import MineCLIP
-def accquire_goal_embeddings(clip_path, goal_list, device="cuda"):
+def accquire_goal_embeddings(clip_path, goal_list, device="cpu"):
     clip_cfg = {'arch': 'vit_base_p16_fz.v2.t2', 'hidden_dim': 512, 'image_feature_dim': 512, 'mlp_adapter_spec': 'v0-2.t0', 
                'pool_type': 'attn.d2.nh8.glusw', 'resolution': [160, 256]}
     clip_model = MineCLIP(**clip_cfg)
@@ -399,8 +399,10 @@ class MineAgent:
                 })
                 self.model.load_state_dict(backbone_state_dict)
             else:
-                self.model.load_state_dict(state_dict['model_state_dict'])
-                self.iter_num = state_dict['iter_num']
+                # self.model.load_state_dict(state_dict['model_state_dict'])
+                self.model = state_dict
+                # self.iter_num = state_dict['iter_num']
+                self.iter_num = 0
         
         self.model = self.model.to(self.device)
     

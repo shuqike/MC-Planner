@@ -57,7 +57,7 @@ def torch_device(device: Union[str, int, None]) -> torch.device:
     if device is None:
         return None
     elif device == "auto":
-        return torch.device("cuda")
+        return torch.device("cpu")
     elif isinstance(device, int) and device < 0:
         return torch.device("cpu")
     else:
